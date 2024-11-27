@@ -1,0 +1,102 @@
+# IN THIS PROGRAM YOU CAN:
+#  1) Book A ticket
+#  2) Cancel a Ticket
+#  3) Check Status of train arrival
+#  4) Retrieve my data corresponding to ticket/PNR
+#  5) Be able to check for available trains based on my date of travel
+#  6) Seat position
+#  7) Origin Station Final Station
+
+# CRITERIA IN A TICKET:
+#     1) PNR no
+#     2) Name of Passenger
+#     3) Train No
+#     4) Train Status
+#     5) Date of Travel
+#     6) Contact No
+#     7) Initial City
+#     8) Final City
+
+# NO OF SEATS LEFT AVAILABLE IN A TRAIN
+
+
+import mysql.connector as sqlcon
+
+mydb = sqlcon.connect(host="localhost", user="user", passwd="root")
+cursor = mydb.cursor()
+cursor.execute("CREATE DATABASE IF NOT EXISTS Railway;"
+               "USE Railway;"
+
+               "Create Table IF NOT EXISTS RailwayTrains("
+               "TrainNo INT PRIMARY KEY,"
+               "STATUS Varchar(10),"
+               "SeatsRemaining INT);"
+
+               "Create Table IF NOT EXISTS RailwayTickets("
+               "PNR varchar(11) Primary Key,"
+               "name Varchar(20) NOT NULL,"
+               "TrainNo varchar(20),"
+               "date Varchar(10),"
+               "contact varchar(15));")
+cursor.close()
+mydb.close()
+
+mydb = sqlcon.connect(host="localhost", user="user", passwd="root",database='railway')
+cursor2 = mydb.cursor()
+st=('Insert into RailwayTickets Values(%s,%s,%s,%s,%s)')
+val=("12","12","12","12","12")
+cursor2.execute(st,val)
+mydb.commit()
+
+------------------------------
+RAILWAYTRAINS:
+
+cursor.execute("CREATE DATABASE IF NOT EXISTS Railway")
+cursor.execute("USE Railway")
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS RailwayTrains (
+        TrainNo INT PRIMARY KEY,
+        STATUS VARCHAR(10),
+        SeatsRemaining INT
+    )
+""")
+
+while True:
+    i=1
+    try:
+        date = input("date of travel (dd/mm/yy): ")
+        if len(date) > 8:
+            raise ValueError
+
+        for char in date:
+            print(char)
+            if i%3!=0:
+                int(char)
+                print("2 ")
+            elif char == '/':
+                i+1
+                print("1")
+            else:
+                raise ValueError
+
+        else:
+            break
+    except ValueError:
+        print("Please enter a Valid Date: \n")
+
+
+-------------
+date = input("date of travel (dd/mm/yy): ")
+if len(date) > 8:
+    raise ValueError
+
+for char in date:
+    print(char)
+    if i%3!=0:
+        int(char)
+        print("2 ")
+    elif char == '/':
+        i+=1
+        print("1")
+
+PNR5249087
